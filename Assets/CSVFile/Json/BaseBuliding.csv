@@ -1,0 +1,9 @@
+#name对应枚举类型ELocalization,,
+#res_name对应中文名称,,
+#rate表示增加速率,,
+name,res_name,rate
+EBaseBuliding_Mill,木头,10
+EBaseBuliding_Farm,浆果,10
+EBaseBuliding_Quarry,石头,10
+EBaseBuliding_Home,人口,1
+EBaseBuliding_Plants,生肉,5

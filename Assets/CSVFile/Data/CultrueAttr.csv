@@ -1,0 +1,11 @@
+#test,,,,,,,,,,,,,,,,,
+#test,,,,,,,,,,,,,,,,,
+#test,战斗声望,附属村庄产出,部队消耗,招募步兵,步兵升级,移动速度惩罚,军队薪酬,驻军薪酬,军队升级,贸易惩罚,移动速度,升级骑兵,特种产出,城镇税收,工坊收入,视野范围,工程建设速度
+!,double,double,double,double,double,double,double,double,double,double,double,double,double,double,double,double,double
+!,Prestige,VillageOutput,TroopConsumption,RecruitInfantry,UpgradeInfantry,MovementSpeedPenalty,MilitarySalary,ArmySalary,MilitaryUpgrade,TradePenalty,MovingSpeed,UpgradeCavalry,SpecialOutput,UrbanTax,WorkshopIncome,FieldOfVision,ConstructionSpeed
+Plain,1.15d,1.10d,1.10d,1d,1d,1d,1d,1d,1d,1d,1d,1d,1d,1d,1d,1d,1d
+IceSheet,1d,1d,1d,0.75d,0.75d,1.1d,1d,1d,1d,1d,1d,1d,1d,1d,1d,1d,1d
+Plateau,1d,1d,1d,1d,1d,1d,0.85d,0.85d,1.15d,1d,1d,1d,1d,1d,1d,1d,1d
+Gobi,1d,1d,1d,1d,1d,1d,1.10d,1.10d,1d,0.9d,1.05d,1d,1d,1d,1d,1d,1d
+Grassland,1d,1d,1d,1d,1d,1d,1d,1d,1d,1d,1d,0.85d,1.10d,0.8d,0.9d,1d,1d
+Forest,1d,1d,1d,1d,1d,0.9d,1d,1d,1d,1d,1d,1d,1d,1d,1d,1.1d,0.9d

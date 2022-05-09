@@ -1,0 +1,12 @@
+#test,
+#test,
+#test,
+@,string
+@,name
+TestObjUrl,http://121.5.74.115:11000/graduation/testobj/
+TestObj2Url,http://121.5.74.115:11000/graduation/testobj2/
+TestObj2Param1,username
+TestObj2Param2,password
+Login_Scuec_Url,http://121.5.74.115:11000/graduation/login_scuec/
+Login_Scuec_Param1,username
+Login_Scuec_Param2,password
