@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-//CreateTime：2022/5/9 16:26:57
+//CreateTime：2022/5/10 15:18:17
 namespace DataCs
 {
 	public struct Data_UIFormID_Struct
@@ -25,8 +25,10 @@ namespace DataCs
 		public static Dictionary<string, Data_UIFormID_Struct> Dic = new Dictionary<string, Data_UIFormID_Struct>()
 		{
 			{"LoginForm",new Data_UIFormID_Struct("LoginForm",1000,"UI/UIForm/LoginForm",1)},
+			{"MainForm",new Data_UIFormID_Struct("MainForm",1001,"UI/UIForm/MainForm",1)},
 		};
 		public static string key_LoginForm = "LoginForm";
+		public static string key_MainForm = "MainForm";
 	}
 }
 

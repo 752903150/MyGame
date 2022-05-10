@@ -7,7 +7,7 @@ public class UIForm : MonoBehaviour
 {
     public virtual void Awake()
     {
-        //transform
+        
     }
     public virtual void OnOpen(System.Object obj)//控制权交给UISystem
     {

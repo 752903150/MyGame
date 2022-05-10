@@ -12,7 +12,6 @@ public partial class LoginFom : UIForm
 {
 	private Sequence sequence;
 	private LoginUserInfo loginUserInfo;//用户登录信息
-
 	public override void Awake()
 	{
 		base.Awake();
@@ -218,6 +217,7 @@ public partial class LoginFom : UIForm
 			Data_EventName.OnLoginSucceed_str, 
 			new LoginSucceedEventArgs(m_inputUsername.text, m_inputPassword.text)
 			);
+		UISystem.Instance.CloseUIForm(Data_UIFormID.key_LoginForm,this);
 	}
 
 	private void SaveFile()

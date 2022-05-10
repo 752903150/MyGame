@@ -20,6 +20,7 @@ public class UISystem: MonoBehaviour
 
     public bool OpenUIForm(string UIFormName,System.Object obj=null)
     {
+        Debug.LogError("´ò¿ª"+UIFormName);
         int id = Data_UIFormID.Dic[UIFormName].ID;
         string path = Data_UIFormID.Dic[UIFormName].path;
         if (ObjectPoolSystem.Instance.TestUIFormPool(id))
@@ -49,8 +50,39 @@ public class UISystem: MonoBehaviour
 
     public void CloseUIForm(string UIFormName, UIForm obj)
     {
+        Debug.LogError("¹Ø±Õ"+UIFormName);
         int id = Data_UIFormID.Dic[UIFormName].ID;
         obj.OnClose();
         ObjectPoolSystem.Instance.ReBackUIFormPool(id, obj);
+    }
+
+    public UIItem OpenUIItem(string UIItemName,UIForm Parent,System.Object obj = null)
+    {
+        int id = Data_UIItemID.Dic[UIItemName].ID;
+        string path = Data_UIItemID.Dic[UIItemName].path;
+        if (ObjectPoolSystem.Instance.TestUIItemPool(id))
+        {
+            UIItem temp = ObjectPoolSystem.Instance.GetUIItemFormPool(id);
+            if (temp != null)
+            {
+                temp.OnOpen(obj);
+                return temp;
+            }
+        }
+        else
+        {
+            GameObject temp = GameObject.Instantiate((GameObject)Resources.Load(path));
+            temp.GetComponent<UIItem>().OnOpen(obj);
+            temp.GetComponent<UIItem>().SetParent(Parent);
+            return temp.GetComponent<UIItem>();
+        }
+        return null;
+    }
+
+    public void CloseUIItem(string UIItemName, UIItem obj)
+    {
+        int id = Data_UIItemID.Dic[UIItemName].ID;
+        obj.OnClose();
+        ObjectPoolSystem.Instance.ReBackUIItemPool(id, obj);
     }
 }

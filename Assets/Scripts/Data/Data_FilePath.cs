@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-//CreateTime：2022/5/9 16:26:57
+//CreateTime：2022/5/10 15:18:17
 namespace DataCs
 {
 	public static class Data_FilePath
@@ -19,6 +19,10 @@ namespace DataCs
 		public static string AutoBindUIFormCS_Path = "Assets/Scripts/UI/UIFormBind";
 
 		public static string Event_Path = "Assets/Scripts/Event";
+
+		public static string AutoUIItemCS_Path = "Assets/Scripts/UI/UIItem";
+
+		public static string AutoBindUIItemCS_Path = "Assets/Scripts/UI/UIItemBind";
 
 	}
 }

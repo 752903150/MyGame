@@ -11,24 +11,27 @@ public class AutoBindInspector : Editor
     string UIFormPath = Data_FilePath.AutoUIFormCS_Path;
     string UIFormBindPath = Data_FilePath.AutoBindUIFormCS_Path;
 
+    string UIItemPath = Data_FilePath.AutoUIItemCS_Path;
+    string UIItemBindPath = Data_FilePath.AutoBindUIItemCS_Path;
+
     AutoBind autoBind;
     GameObject Root;
 
-    Dictionary<string,string> AutoBindTips = new Dictionary<string, string>()
+    static Dictionary<string,string> AutoBindTips = new Dictionary<string, string>()
     {
         {"m_txt","Text"},
         {"m_img","Image"},
-        {"m_rawimg","Raw Image"},
+        {"m_rawimg","RawImage"},
         {"m_btn","Button"},
         {"m_toggle","Toggle"},
         {"m_slider","Slider"},
         {"m_scrollbar","Scrollbar"},
         {"m_dropdown","Dropdown"},
         {"m_input","InputField"},
-        {"m_scrollview","ScrollView"},
         {"m_rect","RectTransform"},
+        {"m_round","RoundImage"},
     };
-    List<string> TipsKeys = new List<string>() 
+    static List<string> TipsKeys = new List<string>() 
     {
         "m_txt",
         "m_img",
@@ -39,8 +42,8 @@ public class AutoBindInspector : Editor
         "m_scrollbar",
         "m_dropdown",
         "m_input",
-        "m_scrollview",
-        "m_rect"
+        "m_rect",
+        "m_round",
     };
 
     SerializedProperty itemList;
@@ -64,9 +67,13 @@ public class AutoBindInspector : Editor
             CheckOutGameObject(Root);
             serializedObject.ApplyModifiedProperties();
         }
-        if (GUILayout.Button("生成绑定代码"))
+        if (GUILayout.Button("生成绑定UIFORM代码"))
         {
-            CreateFile();
+            CreateUIFormFile();
+        }
+        if (GUILayout.Button("生成绑定UIITEM代码"))
+        {
+            CreateUIItemFile();
         }
         EditorGUILayout.Space();
         GUILayout.TextArea("AutoBindTips:");
@@ -134,14 +141,21 @@ public class AutoBindInspector : Editor
     }
     
 
-    private void CreateFile()
+    private void CreateUIFormFile()
     {
-        CreateMainFile();
-        CreateBindFile();
-        Debug.Log("Creat File OK!");
+        CreateMainUIFormFile();
+        CreateBindUIFormFile();
+        Debug.Log("Creat UIForm File OK!");
     }
 
-    private void CreateMainFile()
+    private void CreateUIItemFile()
+    {
+        CreateMainUIItemFile();
+        CreateBindUIItemFile();
+        Debug.Log("Creat UIItem File OK!");
+    }
+
+    private void CreateMainUIFormFile()
     {
         if(!CodeCreate.TestFileExists(UIFormPath,Root.name+".cs"))
         {
@@ -159,7 +173,7 @@ public class AutoBindInspector : Editor
         }
     }
 
-    private void CreateBindFile()
+    private void CreateBindUIFormFile()
     {
         List<string> name_list = new List<string>();
         List<string> type_list = new List<string>();
@@ -171,5 +185,37 @@ public class AutoBindInspector : Editor
         }
 
         CodeCreate.CreateORwriteConfigFile(UIFormBindPath, Root.name + ".Bind.cs", CodeCreate.UIFormBindGenertion(name_list, type_list, Root.name), 0);
+    }
+
+    private void CreateMainUIItemFile()
+    {
+        if (!CodeCreate.TestFileExists(UIFormPath, Root.name + ".cs"))
+        {
+            List<string> button_list = new List<string>();
+
+            for (int i = 0; i < itemList.arraySize; i++)
+            {
+                if (itemList.GetArrayElementAtIndex(i).FindPropertyRelative("typename").stringValue == "Button")
+                {
+                    button_list.Add(itemList.GetArrayElementAtIndex(i).FindPropertyRelative("name").stringValue);
+                }
+            }
+
+            CodeCreate.CreateORwriteConfigFile(UIItemPath, Root.name + ".cs", CodeCreate.UIItemGenertion(button_list, Root.name), 1);
+        }
+    }
+
+    private void CreateBindUIItemFile()
+    {
+        List<string> name_list = new List<string>();
+        List<string> type_list = new List<string>();
+
+        for (int i = 0; i < itemList.arraySize; i++)
+        {
+            name_list.Add(itemList.GetArrayElementAtIndex(i).FindPropertyRelative("name").stringValue);
+            type_list.Add(itemList.GetArrayElementAtIndex(i).FindPropertyRelative("typename").stringValue);
+        }
+
+        CodeCreate.CreateORwriteConfigFile(UIItemBindPath, Root.name + ".Bind.cs", CodeCreate.UIItemBindGenertion(name_list, type_list, Root.name), 0);
     }
 }

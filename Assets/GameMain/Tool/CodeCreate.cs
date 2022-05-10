@@ -405,6 +405,161 @@ public static class CodeCreate
         return sb.ToString();
     }
 
+    /// <summary>
+    /// 生成UI界面主代码
+    /// </summary>
+    /// <param name="button_list"></param>
+    /// <param name="class_name"></param>
+    /// <returns></returns>
+    public static string UIItemGenertion(List<string> button_list, string class_name)
+    {
+        if (class_name == "")
+        {
+            return "!类名为空";
+        }
+
+        StringBuilder sb = new StringBuilder(400);
+
+        sb.Append("using System.Collections;\n");
+        sb.Append("using System.Collections.Generic;\n");
+        sb.Append("using UnityEngine;\n");
+        sb.Append("using UnityEngine.UI;\n\n");
+        sb.Append("//CreateTime：" + DateTime.Now.ToString() + "\n");
+
+        sb.Append("public partial class ");
+        sb.Append(class_name);
+        sb.Append(" : UIItem\n");
+        sb.Append("{\n");
+
+        sb.Append("\tpublic override void Awake()\n");
+        sb.Append("\t{\n");
+        sb.Append("\t\tbase.Awake();\n");
+        sb.Append("\t\tInitComponent(); \n");
+        sb.Append("\t}\n\n");
+
+        sb.Append("\tpublic override void OnOpen(System.Object obj)\n");
+        sb.Append("\t{\n");
+        sb.Append("\t\tbase.OnOpen(obj);\n");
+        sb.Append("\t\tRegisterEvent(); \n");
+        sb.Append("\t}\n\n");
+
+        sb.Append("\tpublic override void OnClose()\n");
+        sb.Append("\t{\n");
+        sb.Append("\t\tbase.OnClose();\n");
+        sb.Append("\t\tReleaseEvent(); \n");
+        sb.Append("\t}\n\n");
+
+
+        sb.Append("\tprivate void RegisterEvent()\n");
+        sb.Append("\t{\n");
+        if (button_list != null && button_list.Count != 0)
+        {
+            for (int i = 0; i < button_list.Count; i++)
+            {
+                sb.Append("\t\t");
+                sb.Append(button_list[i]);
+                sb.Append(".onClick.AddListener(OnBtn");
+                sb.Append(button_list[i].Substring(5));
+                sb.Append(");\n");
+            }
+        }
+        else
+        {
+            sb.Append("\t\t\n");
+        }
+        sb.Append("\t}\n\n");
+
+        sb.Append("\tprivate void ReleaseEvent()\n");
+        sb.Append("\t{\n");
+        if (button_list != null && button_list.Count != 0)
+        {
+            for (int i = 0; i < button_list.Count; i++)
+            {
+                sb.Append("\t\t");
+                sb.Append(button_list[i]);
+                sb.Append(".onClick.RemoveListener(OnBtn");
+                sb.Append(button_list[i].Substring(5));
+                sb.Append(");\n");
+            }
+        }
+        else
+        {
+            sb.Append("\t\t\n");
+        }
+        sb.Append("\t}\n\n");
+
+        if (button_list != null && button_list.Count != 0)
+        {
+            for (int i = 0; i < button_list.Count; i++)
+            {
+                sb.Append("\tprivate void OnBtn");
+                sb.Append(button_list[i].Substring(5));
+                sb.Append("()\n");
+                sb.Append("\t{\n");
+                sb.Append("\t\t\n");
+                sb.Append("\t}\n");
+            }
+        }
+
+        sb.Append("\n}\n");
+
+        return sb.ToString();
+    }
+
+    /// <summary>
+    /// 生成UI界面绑定代码
+    /// </summary>
+    /// <param name="name_list"></param>
+    /// <param name="type_list"></param>
+    /// <param name="class_name"></param>
+    /// <returns></returns>
+    public static string UIItemBindGenertion(List<string> name_list, List<string> type_list, string class_name)
+    {
+        if (name_list == null || type_list == null)
+        {
+            return "!列表为null";
+        }
+        if (name_list.Count == 0 || type_list.Count == 0)
+        {
+            return "!列表为空";
+        }
+        if (class_name == "")
+        {
+            return "!类名为空";
+        }
+
+        StringBuilder sb = new StringBuilder(400);
+
+        sb.Append("using System.Collections;\n");
+        sb.Append("using System.Collections.Generic;\n");
+        sb.Append("using UnityEngine;\n");
+        sb.Append("using UnityEngine.UI;\n\n");
+        sb.Append("//CreateTime：" + DateTime.Now.ToString() + "\n");
+
+        sb.Append("public partial class " + class_name + "\n");
+        sb.Append("{\n");
+        sb.Append("\tprivate AutoBind autoBind;\n");
+        for (int i = 0; i < name_list.Count; i++)
+        {
+            sb.Append("\tprivate " + type_list[i] + " " + name_list[i] + ";\n");
+        }
+
+        sb.Append("\n\tprivate void InitComponent()\n");
+        sb.Append("\t{\n");
+        sb.Append("\t\tautoBind = GetComponent<AutoBind>();\n");
+        for (int i = 0; i < name_list.Count; i++)
+        {
+            sb.Append("\t\t" + name_list[i] + " = autoBind.itemList[");
+            sb.Append(i.ToString());
+            sb.Append("].obj.GetComponent<");
+            sb.Append(type_list[i]);
+            sb.Append(">();\n");
+        }
+
+        sb.Append("\t}\n}\n");
+        return sb.ToString();
+    }
+
     public static string EventArgsGenertion(List<string> name_list,List<string> type_list,string class_name)
     {
         if(name_list == null|| type_list == null)

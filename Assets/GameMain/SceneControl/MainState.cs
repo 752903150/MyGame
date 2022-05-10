@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using DataCs;
 public class MainState : ISceneState
 {
     public MainState(SceneStateC c):base(c)
@@ -13,6 +13,7 @@ public class MainState : ISceneState
     {
         //Debug.Log("MainState");
         Debug.Log("进入主界面");
+        UISystem.Instance.OpenUIForm(Data_UIFormID.key_MainForm);
     }
 
     public override void StateUpdate()

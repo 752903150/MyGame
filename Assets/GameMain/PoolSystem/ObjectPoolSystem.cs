@@ -15,6 +15,8 @@ public class ObjectPoolSystem
 
     static Dictionary<int, Queue<UIForm>> UIFormPool = new Dictionary<int, Queue<UIForm>>();//UIFORM³Ø×Öµä
 
+    static Dictionary<int, Queue<UIItem>> UIItemPool = new Dictionary<int, Queue<UIItem>>();//UIItem³Ø×Öµä
+
     static Dictionary<int, Queue<AudioClip>> AudioClipPool = new Dictionary<int, Queue<AudioClip>>();//AudioClip³Ø×Öµä
 
     public bool ReBackGameObjectPool(int id, GameObject obj)
@@ -47,6 +49,22 @@ public class ObjectPoolSystem
         }
         uIForm.gameObject.SetActive(false);
         UIFormPool[id].Enqueue(uIForm);
+        return true;
+    }
+
+    public bool ReBackUIItemPool(int id, UIItem uiItem)
+    {
+        if (uiItem == null)
+        {
+            return false;
+        }
+
+        if (!UIItemPool.ContainsKey(id))
+        {
+            UIItemPool.Add(id, new Queue<UIItem>());
+        }
+        uiItem.gameObject.SetActive(false);
+        UIItemPool[id].Enqueue(uiItem);
         return true;
     }
 
@@ -86,6 +104,17 @@ public class ObjectPoolSystem
         return null;
     }
 
+    public UIItem GetUIItemFormPool(int id)
+    {
+        if (UIItemPool.ContainsKey(id) && UIItemPool[id].Count != 0)//È¡³Ø
+        {
+            UIItem temp = UIItemPool[id].Dequeue();
+            temp.gameObject.SetActive(true);
+            return temp;
+        }
+        return null;
+    }
+
     public AudioClip GetAudioClipFormPool(int id)
     {
         if (AudioClipPool.ContainsKey(id) && AudioClipPool[id].Count != 0)//È¡³Ø
@@ -95,6 +124,8 @@ public class ObjectPoolSystem
         }
         return null;
     }
+
+
 
     public bool TestGameObjectPool(int id)
     {
@@ -108,6 +139,15 @@ public class ObjectPoolSystem
     public bool TestUIFormPool(int id)
     {
         if (UIFormPool.ContainsKey(id) && UIFormPool[id].Count != 0)//È¡³Ø
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public bool TestUIItemPool(int id)
+    {
+        if (UIItemPool.ContainsKey(id) && UIItemPool[id].Count != 0)//È¡³Ø
         {
             return true;
         }
