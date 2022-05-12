@@ -20,7 +20,6 @@ public class UISystem: MonoBehaviour
 
     public bool OpenUIForm(string UIFormName,System.Object obj=null)
     {
-        Debug.LogError("´ò¿ª"+UIFormName);
         int id = Data_UIFormID.Dic[UIFormName].ID;
         string path = Data_UIFormID.Dic[UIFormName].path;
         if (ObjectPoolSystem.Instance.TestUIFormPool(id))

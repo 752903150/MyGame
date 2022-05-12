@@ -36,7 +36,7 @@ public class TestInput : MonoBehaviour
             TestObj2 t = await NetSystem.Instance.LoadData<TestObj2>(
                 Data_WebRequest.TestObj2Url_name,
                 www,
-                () =>
+                (res) =>
                 {
                     Debug.LogError("成功");
                 },

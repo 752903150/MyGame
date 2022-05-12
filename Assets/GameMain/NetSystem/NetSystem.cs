@@ -54,7 +54,7 @@ public class NetSystem : MonoBehaviour
     /// <param name="succeed">成功访问函数</param>
     /// <param name="fail">失败访问函数</param>
     /// <returns>一个T类型的结果，或者null</returns>
-    public async Task<NetObj> LoadData<T>(string url,WWWForm form=null,Action succeed=null,Action fail=null) where T : NetObj
+    public async Task<NetObj> LoadData<T>(string url,WWWForm form=null,Action<System.Object> succeed=null,Action fail=null) where T : NetObj
     {
         UnityWebRequest Request = null;
         if (form != null)
@@ -82,14 +82,15 @@ public class NetSystem : MonoBehaviour
         }
         else
         {
+            
             try
             {
+                T obj = JsonMapper.ToObject<T>(text);
                 if (succeed != null)
                 {
-                    succeed();
+                    succeed(obj);
                 }
-                Debug.LogError(text);
-                return JsonMapper.ToObject<T>(text);
+                return obj;
             }
             catch (Exception ex)
             {
@@ -97,6 +98,37 @@ public class NetSystem : MonoBehaviour
                 {
                     fail();
                 }
+                Debug.LogError(ex.Message);
+                return null;
+            }
+        }
+    }
+
+    public async Task<Texture> LoadImg(string url)
+    {
+        UnityWebRequest Request = null;
+        Request = UnityWebRequestTexture.GetTexture(url);
+        await Request.SendWebRequest();
+        
+
+        if (Request.result == UnityWebRequest.Result.ProtocolError ||
+            Request.result == UnityWebRequest.Result.ConnectionError ||
+            Request.result == UnityWebRequest.Result.DataProcessingError)
+        {
+            Debug.LogError("Net Error!");
+            return null;
+        }
+        else
+        {
+
+            try
+            {
+                Texture2D download = ((DownloadHandlerTexture)Request.downloadHandler).texture; 
+                //Sprite sprite = Sprite.Create(download, new Rect(0, 0, download.width, download.height), new Vector2(0, 0));
+                return download;
+            }
+            catch (Exception ex)
+            {
                 Debug.LogError(ex.Message);
                 return null;
             }

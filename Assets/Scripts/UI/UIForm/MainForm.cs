@@ -34,10 +34,6 @@ public partial class MainForm : UIForm
 	private void ReSetData()
     {
 		leftGameItems = new List<LeftGameItem>();
-		for (int i = 0; i < 10; i++)
-		{
-			leftGameItems.Add(UISystem.Instance.OpenUIItem(Data_UIItemID.key_LeftGameItem, this) as LeftGameItem);
-		}
 	}
 
 	private void RegisterEvent()
@@ -107,14 +103,59 @@ public partial class MainForm : UIForm
 		m_btnLeftListMax.gameObject.SetActive(false);
 	}
 
-	private void RefreshMainPanel()
+	private async void RefreshMainPanel()
     {
-		
-
-		for(int i=0;i<leftGameItems.Count;i++)
+		WWWForm www = new WWWForm();
+		www.AddField(Data_WebRequest.Get_User_Game_Param1_name, "201921098271");
+		bool flag = false;
+		Get_User_Game t = await NetSystem.Instance.LoadData<Get_User_Game>(
+			Data_WebRequest.Get_User_GameUrl_name,
+			www,
+            (res) =>
+            {
+				Get_User_Game temp = res as Get_User_Game;
+				if(temp==null|| temp.get_User_Game_Items==null)
+                {
+					Debug.LogError("类型为空！");
+                }
+				else
+                {
+					int add_num = temp.get_User_Game_Items.Count - leftGameItems.Count;
+					if(add_num<0)
+                    {
+						for (int i = 0; i < add_num; i++)
+						{
+							UISystem.Instance.CloseUIItem(Data_UIItemID.key_LeftGameItem, leftGameItems[0]);
+							leftGameItems.RemoveAt(0);
+						}
+					}
+					else
+                    {
+						for (int i = 0; i < add_num; i++)
+						{
+							leftGameItems.Add(UISystem.Instance.OpenUIItem(Data_UIItemID.key_LeftGameItem, this) as LeftGameItem);
+						}
+					}
+					
+					for(int i=0;i< leftGameItems.Count;i++)
+                    {
+						leftGameItems[i].transform.SetParent(m_rectContent.transform);
+						leftGameItems[i].SetData(temp.get_User_Game_Items[i]);
+					}
+				}
+				
+			},
+			() =>
+			{
+				Debug.LogError("网络错误");
+				flag = true;
+			}
+		) as Get_User_Game;
+		if(flag)
         {
-			leftGameItems[i].gameObject.transform.SetParent(m_rectContent.transform,false);
+			return;
         }
+		
     }
 
 	private void RefreshTestPanel()
