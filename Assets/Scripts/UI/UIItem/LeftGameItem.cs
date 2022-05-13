@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DataCs;
 
 //CreateTime：2022/5/10 15:10:26
 public partial class LeftGameItem : UIItem
@@ -38,8 +39,9 @@ public partial class LeftGameItem : UIItem
 		m_btnMyGame.onClick.RemoveListener(OnBtnMyGame);
 	}
 
-	private void OnBtnMyGame()
+	private async void OnBtnMyGame()
 	{
+		((MainForm)uiForm).ShowGameContent(gameid.ToString(),m_rawimgHead.texture);
 		
 	}
 
@@ -73,5 +75,7 @@ public partial class LeftGameItem : UIItem
 		m_txtGame.text = gamename;
 		m_rawimgHead.texture = await NetSystem.Instance.LoadImg(gameicon);
     }
+
+	
 }
 

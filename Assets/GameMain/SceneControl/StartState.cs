@@ -5,6 +5,7 @@ using DataCs;
 
 public class StartState : ISceneState
 {
+    string username;
     bool isLogin;
     public StartState(SceneStateC c) : base(c)
     {
@@ -22,7 +23,7 @@ public class StartState : ISceneState
     {
         if(isLogin)//µÇÂ¼³É¹¦Ìø×ª
         {
-            m_Contorller.SetState(Data_StateName.MainState_name);
+            m_Contorller.SetState(Data_StateName.MainState_name, username);
         }
     }
 
@@ -35,6 +36,7 @@ public class StartState : ISceneState
     {
         LoginSucceedEventArgs loginSucceedEventArgs = eventArgs as LoginSucceedEventArgs;
         isLogin = true;
-        Debug.LogError(loginSucceedEventArgs.username);
+        username = loginSucceedEventArgs.username;
+        //Debug.LogError(loginSucceedEventArgs.username);
     }
 }

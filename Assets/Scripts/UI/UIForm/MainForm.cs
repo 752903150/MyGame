@@ -9,7 +9,16 @@ using DataCs;
 public partial class MainForm : UIForm
 {
 
+	string username;
+
 	List<LeftGameItem> leftGameItems;
+	List<MainHeadItem> mainHeadItems;
+	List<SlideShowItem> slideShowItems;
+
+	float slide_curr_time;//轮播图当前运行时间
+	float slide_interval_time;//轮播图间隔时间
+	float slide_shs_time;//轮播图显示与隐藏时间
+	int slide_curr_num;//轮播图标志数
 
 	public override void Awake()
 	{
@@ -20,6 +29,17 @@ public partial class MainForm : UIForm
 	public override void OnOpen(System.Object obj)
 	{
 		base.OnOpen(obj);
+
+		if(obj==null)
+        {
+			username = "201921098271";
+		}
+        else
+        {
+			username = obj.ToString();
+		}
+		
+
 		RegisterEvent();
 		ReSetData();
 		OnBtnMainPanel();
@@ -31,9 +51,32 @@ public partial class MainForm : UIForm
 		ReleaseEvent(); 
 	}
 
-	private void ReSetData()
+    public override void Update()
     {
+        base.Update();
+		slide_curr_time += Time.deltaTime;
+		
+		if (slide_curr_time > slide_interval_time)
+        {
+			slide_curr_time = 0f;
+			SlideFunc();
+        }
+
+	}
+
+    private void ReSetData()
+    {
+
+		m_rectMainHead.gameObject.SetActive(false);
+		m_rectMainMid.gameObject.SetActive(false);
 		leftGameItems = new List<LeftGameItem>();
+		mainHeadItems = new List<MainHeadItem>();
+		slideShowItems = new List<SlideShowItem>();
+
+		slide_curr_num = 0;
+		slide_curr_time = 0f;
+		slide_interval_time = float.Parse(Data_StaticData.slide_interval_time_val);
+		slide_shs_time = float.Parse(Data_StaticData.slide_shs_time_val);
 	}
 
 	private void RegisterEvent()
@@ -103,64 +146,23 @@ public partial class MainForm : UIForm
 		m_btnLeftListMax.gameObject.SetActive(false);
 	}
 
-	private async void RefreshMainPanel()
-    {
-		WWWForm www = new WWWForm();
-		www.AddField(Data_WebRequest.Get_User_Game_Param1_name, "201921098271");
-		bool flag = false;
-		Get_User_Game t = await NetSystem.Instance.LoadData<Get_User_Game>(
-			Data_WebRequest.Get_User_GameUrl_name,
-			www,
-            (res) =>
-            {
-				Get_User_Game temp = res as Get_User_Game;
-				if(temp==null|| temp.get_User_Game_Items==null)
-                {
-					Debug.LogError("类型为空！");
-                }
-				else
-                {
-					int add_num = temp.get_User_Game_Items.Count - leftGameItems.Count;
-					if(add_num<0)
-                    {
-						for (int i = 0; i < add_num; i++)
-						{
-							UISystem.Instance.CloseUIItem(Data_UIItemID.key_LeftGameItem, leftGameItems[0]);
-							leftGameItems.RemoveAt(0);
-						}
-					}
-					else
-                    {
-						for (int i = 0; i < add_num; i++)
-						{
-							leftGameItems.Add(UISystem.Instance.OpenUIItem(Data_UIItemID.key_LeftGameItem, this) as LeftGameItem);
-						}
-					}
-					
-					for(int i=0;i< leftGameItems.Count;i++)
-                    {
-						leftGameItems[i].transform.SetParent(m_rectContent.transform);
-						leftGameItems[i].SetData(temp.get_User_Game_Items[i]);
-					}
-				}
-				
-			},
-			() =>
-			{
-				Debug.LogError("网络错误");
-				flag = true;
-			}
-		) as Get_User_Game;
-		if(flag)
-        {
-			return;
-        }
-		
-    }
-
 	private void RefreshTestPanel()
 	{
 
+	}
+	/// <summary>
+	/// 轮播运行逻辑
+	/// </summary>
+	public void SlideFunc()
+    {
+		if(slideShowItems.Count<1)
+        {
+			return;
+        }
+		int num = slideShowItems.Count;
+		slideShowItems[slide_curr_num % num].HideByAnimation();
+		slideShowItems[(slide_curr_num + 1) % num].ShowByAnimation();
+		slide_curr_num++;
 	}
 
 }

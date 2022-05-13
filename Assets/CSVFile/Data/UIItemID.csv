@@ -4,3 +4,5 @@
 !,int,string
 !,ID,path
 LeftGameItem,2000,UI/UIItem/LeftGameItem
+MainHeadItem,2001,UI/UIItem/MainHeadItem
+SlideShowItem,2002,UI/UIItem/SlideShowItem

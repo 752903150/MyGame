@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-//CreateTime：2022/5/10 15:41:04
+//CreateTime：2022/5/13 15:07:00
 public partial class MainForm
 {
 	private AutoBind autoBind;
@@ -23,6 +23,12 @@ public partial class MainForm
 	private Button m_btnLeftListMax;
 	private RectTransform m_rectmaxposition;
 	private RectTransform m_rectminposition;
+	private RectTransform m_rectMainHead;
+	private RawImage m_rawimgMainHead;
+	private RectTransform m_rectLayoutMainHead;
+	private RectTransform m_rectMainMid;
+	private RectTransform m_rectMainContent;
+	private RectTransform m_rectSlideShow;
 	private RectTransform m_rectTestPanel;
 
 	private void InitComponent()
@@ -44,7 +50,13 @@ public partial class MainForm
 		m_btnLeftListMax = autoBind.itemList[13].obj.GetComponent<Button>();
 		m_rectmaxposition = autoBind.itemList[14].obj.GetComponent<RectTransform>();
 		m_rectminposition = autoBind.itemList[15].obj.GetComponent<RectTransform>();
-		m_rectTestPanel = autoBind.itemList[16].obj.GetComponent<RectTransform>();
+		m_rectMainHead = autoBind.itemList[16].obj.GetComponent<RectTransform>();
+		m_rawimgMainHead = autoBind.itemList[17].obj.GetComponent<RawImage>();
+		m_rectLayoutMainHead = autoBind.itemList[18].obj.GetComponent<RectTransform>();
+		m_rectMainMid = autoBind.itemList[19].obj.GetComponent<RectTransform>();
+		m_rectMainContent = autoBind.itemList[20].obj.GetComponent<RectTransform>();
+		m_rectSlideShow = autoBind.itemList[21].obj.GetComponent<RectTransform>();
+		m_rectTestPanel = autoBind.itemList[22].obj.GetComponent<RectTransform>();
 	}
 }
 

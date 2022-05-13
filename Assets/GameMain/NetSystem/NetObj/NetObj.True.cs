@@ -59,12 +59,16 @@ public class Get_Game_Content : NetObj
 
 public class Get_Game_Content_Item
 {
+    public int contentid;
     public string contenttype;
     public string contentdes;
     public string contentpath;
+    public string contentimgpath;
+    public int contentparentid;
 
     public override string ToString()
     {
-        return string.Format("contenttype:{0},contentdes:{1},contentpath:{2}", contenttype, contentdes, contentpath);
+        return string.Format("contentid:{0},contenttype:{1},contentdes:{2},contentpath:{3},contentimgpath:{4},contentparentid{5}"
+            , contentid , contenttype, contentdes, contentpath, contentimgpath,contentparentid);
     }
 }

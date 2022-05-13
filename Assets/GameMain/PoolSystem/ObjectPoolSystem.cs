@@ -19,6 +19,7 @@ public class ObjectPoolSystem
 
     static Dictionary<int, Queue<AudioClip>> AudioClipPool = new Dictionary<int, Queue<AudioClip>>();//AudioClip³Ø×Öµä
 
+    static Dictionary<string, Queue<Texture>> TexturePool = new Dictionary<string, Queue<Texture>>();//ÎÆÀí³Ø
     public bool ReBackGameObjectPool(int id, GameObject obj)
     {
         if (obj == null)
@@ -83,6 +84,21 @@ public class ObjectPoolSystem
         return true;
     }
 
+    public bool ReBackTexturePool(string path, Texture texture)
+    {
+        if (texture == null)
+        {
+            return false;
+        }
+
+        if (!TexturePool.ContainsKey(path))
+        {
+            TexturePool.Add(path, new Queue<Texture>());
+        }
+        TexturePool[path].Enqueue(texture);
+        return true;
+    }
+
     public GameObject GetGameObjectFormPool(int id)
     {
         if (GameObjectPool.ContainsKey(id) && GameObjectPool[id].Count != 0)//È¡³Ø
@@ -125,6 +141,16 @@ public class ObjectPoolSystem
         return null;
     }
 
+    public Texture GetTextureFormPool(string path)
+    {
+        if (TexturePool.ContainsKey(path) && TexturePool[path].Count != 0)//È¡³Ø
+        {
+            Texture temp = TexturePool[path].Dequeue();
+            return temp;
+        }
+        return null;
+    }
+
 
 
     public bool TestGameObjectPool(int id)
@@ -157,6 +183,15 @@ public class ObjectPoolSystem
     public bool TestAudioClipPool(int id)
     {
         if (AudioClipPool.ContainsKey(id) && AudioClipPool[id].Count != 0)//È¡³Ø
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public bool TestTexturePool(string path)
+    {
+        if (TexturePool.ContainsKey(path) && TexturePool[path].Count != 0)//È¡³Ø
         {
             return true;
         }

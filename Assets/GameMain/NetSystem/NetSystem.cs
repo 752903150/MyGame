@@ -104,8 +104,13 @@ public class NetSystem : MonoBehaviour
         }
     }
 
-    public async Task<Texture> LoadImg(string url)
+    public async Task<Texture> LoadImg(string url,Action<Texture> succeed=null)
     {
+        if(ObjectPoolSystem.Instance.TestTexturePool(url))
+        {
+            return ObjectPoolSystem.Instance.GetTextureFormPool(url);
+        }
+
         UnityWebRequest Request = null;
         Request = UnityWebRequestTexture.GetTexture(url);
         await Request.SendWebRequest();
@@ -123,8 +128,12 @@ public class NetSystem : MonoBehaviour
 
             try
             {
-                Texture2D download = ((DownloadHandlerTexture)Request.downloadHandler).texture; 
-                //Sprite sprite = Sprite.Create(download, new Rect(0, 0, download.width, download.height), new Vector2(0, 0));
+                Texture2D download = ((DownloadHandlerTexture)Request.downloadHandler).texture;
+                ObjectPoolSystem.Instance.ReBackTexturePool(url, download);
+                if(succeed!=null)
+                {
+                    succeed(download);
+                }
                 return download;
             }
             catch (Exception ex)

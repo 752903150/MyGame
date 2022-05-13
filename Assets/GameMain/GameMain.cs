@@ -16,7 +16,7 @@ public partial class GameMain : MonoBehaviour
 
         StateInit();//×´Ì¬³õÊ¼»¯
 
-        sceneStateC.SetState(Data_StateName.MainState_name);
+        sceneStateC.SetState(Data_StateName.StartState_name);
     }
 
     // Update is called once per frame
