@@ -2,9 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum ELocalization
+namespace MyGameFrameWork
 {
-    ChineseSimplified,
-    ChineseTraditional,
-    English,
+    public enum ELocalization
+    {
+        ChineseSimplified,
+        ChineseTraditional,
+        English,
+    }
 }

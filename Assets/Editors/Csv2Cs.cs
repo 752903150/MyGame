@@ -7,6 +7,7 @@ using System.IO;
 using System;
 using System.Text;
 using DataCs;
+using MyGameFrameWork;
 
 public class Csv2Cs : EditorWindow
 {

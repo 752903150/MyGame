@@ -4,15 +4,20 @@ using UnityEngine;
 using UnityEditor;
 using System.IO;
 using DataCs;
+using MyGameFrameWork;
+
 
 [CustomEditor(typeof(AutoBind))]
 public class AutoBindInspector : Editor
 {
     string UIFormPath = Data_FilePath.AutoUIFormCS_Path;
     string UIFormBindPath = Data_FilePath.AutoBindUIFormCS_Path;
+    string UIFormXLUAPath = Data_FilePath.AutoBindUIFormXLUA_Path;
 
     string UIItemPath = Data_FilePath.AutoUIItemCS_Path;
     string UIItemBindPath = Data_FilePath.AutoBindUIItemCS_Path;
+
+    
 
     AutoBind autoBind;
     GameObject Root;
@@ -74,6 +79,10 @@ public class AutoBindInspector : Editor
         if (GUILayout.Button("生成绑定UIITEM代码"))
         {
             CreateUIItemFile();
+        }
+        if (GUILayout.Button("生成绑定UIFORM代码(XLUA)"))
+        {
+            CreateXLUAUIFormFile();
         }
         EditorGUILayout.Space();
         GUILayout.TextArea("AutoBindTips:");
@@ -155,6 +164,13 @@ public class AutoBindInspector : Editor
         Debug.Log("Creat UIItem File OK!");
     }
 
+    private void CreateXLUAUIFormFile()
+    {
+        CreateMainXLUAUIFormFile();
+        CreateBindXLUAUIFormFile();
+        Debug.Log("Creat XLUAUIForm File OK!");
+    }
+
     private void CreateMainUIFormFile()
     {
         if(!CodeCreate.TestFileExists(UIFormPath,Root.name+".cs"))
@@ -217,5 +233,38 @@ public class AutoBindInspector : Editor
         }
 
         CodeCreate.CreateORwriteConfigFile(UIItemBindPath, Root.name + ".Bind.cs", CodeCreate.UIItemBindGenertion(name_list, type_list, Root.name), 0);
+    }
+
+    private void CreateMainXLUAUIFormFile()
+    {
+        if (!CodeCreate.TestFileExists(UIFormPath, Root.name + ".cs"))
+        {
+            List<string> button_list = new List<string>();
+
+            for (int i = 0; i < itemList.arraySize; i++)
+            {
+                if (itemList.GetArrayElementAtIndex(i).FindPropertyRelative("typename").stringValue == "Button")
+                {
+                    button_list.Add(itemList.GetArrayElementAtIndex(i).FindPropertyRelative("name").stringValue);
+                }
+            }
+
+            CodeCreate.CreateORwriteConfigFile(UIFormPath, Root.name + ".cs", CodeCreate.XLUAUIFormGenertion(button_list, Root.name), 1);
+            CodeCreate.CreateORwriteConfigFile(UIFormXLUAPath, Root.name + ".lua.txt", CodeCreate.XLUAUIFormTXTGenertion(button_list, Root.name),1);
+        }
+    }
+
+    private void CreateBindXLUAUIFormFile()
+    {
+        List<string> name_list = new List<string>();
+        List<string> type_list = new List<string>();
+
+        for (int i = 0; i < itemList.arraySize; i++)
+        {
+            name_list.Add(itemList.GetArrayElementAtIndex(i).FindPropertyRelative("name").stringValue);
+            type_list.Add(itemList.GetArrayElementAtIndex(i).FindPropertyRelative("typename").stringValue);
+        }
+
+        CodeCreate.CreateORwriteConfigFile(UIFormBindPath, Root.name + ".Bind.cs", CodeCreate.XLUAUIFormBindGenertion(name_list, type_list, Root.name), 0);
     }
 }

@@ -4,6 +4,7 @@ using UnityEditor;
 using LitJson;
 using System.IO;
 using DataCs;
+using MyGameFrameWork;
 
 public class JsonEditor 
 {

@@ -3,21 +3,29 @@ using System.Collections.Generic;
 using UnityEngine;
 using DataCs;
 
-public partial class GameMain
+namespace MyGameFrameWork
 {
-    public SceneStateC sceneStateC;
-
-    public StartState StartState;
-    public MainState MainState;
-
-    public void StateInit()
+    public partial class GameMain
     {
-        sceneStateC = new SceneStateC();
+        public SceneStateC sceneStateC;
 
-        StartState = new StartState(sceneStateC);
-        MainState = new MainState(sceneStateC);
+        public StartState StartState;
+        public MainState MainState;
+        public TestState TestState;
 
-        sceneStateC.AddState(Data_StateName.StartState_name, StartState);
-        sceneStateC.AddState(Data_StateName.MainState_name, MainState);
+        public void StateInit()
+        {
+            sceneStateC = new SceneStateC();
+
+            StartState = new StartState(sceneStateC);
+            MainState = new MainState(sceneStateC);
+            TestState = new TestState(sceneStateC);
+
+            sceneStateC.AddState(Data_StateName.StartState_name, StartState);
+            sceneStateC.AddState(Data_StateName.MainState_name, MainState);
+            sceneStateC.AddState(Data_StateName.TestState_name, TestState);
+        }
     }
 }
+
+

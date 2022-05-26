@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-//CreateTime：2022/5/13 15:54:49
+//CreateTime：2022/5/26 15:43:39
 namespace DataCs
 {
 	public struct Data_UIFormID_Struct
@@ -26,9 +26,11 @@ namespace DataCs
 		{
 			{"LoginForm",new Data_UIFormID_Struct("LoginForm",1000,"UI/UIForm/LoginForm",1)},
 			{"MainForm",new Data_UIFormID_Struct("MainForm",1001,"UI/UIForm/MainForm",1)},
+			{"TestForm",new Data_UIFormID_Struct("TestForm",1001,"UI/UIForm/TestForm",1)},
 		};
 		public static string key_LoginForm = "LoginForm";
 		public static string key_MainForm = "MainForm";
+		public static string key_TestForm = "TestForm";
 	}
 }
 

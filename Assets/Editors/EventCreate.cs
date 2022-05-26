@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using DataCs;
+using MyGameFrameWork;
+
 public class EventCreate: EditorWindow
 {
     static EventCreate myWindow; 

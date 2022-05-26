@@ -3,40 +3,44 @@ using System.Collections.Generic;
 using UnityEngine;
 using DataCs;
 
-public class StartState : ISceneState
+namespace MyGameFrameWork
 {
-    string username;
-    bool isLogin;
-    public StartState(SceneStateC c) : base(c)
+    public class StartState : ISceneState
     {
-        this.StateName = "StartState";
-    }
-
-    public override void StateBegin(System.Object obj)
-    {
-        UISystem.Instance.OpenUIForm(Data_UIFormID.key_LoginForm);
-        isLogin = false;
-        EventManagerSystem.Instance.Add2(Data_EventName.OnLoginSucceed_str, LoginSucceed);
-    }
-
-    public override void StateUpdate()
-    {
-        if(isLogin)//登录成功跳转
+        string username;
+        bool isLogin;
+        public StartState(SceneStateC c) : base(c)
         {
-            m_Contorller.SetState(Data_StateName.MainState_name, username);
+            this.StateName = "StartState";
+        }
+
+        public override void StateBegin(System.Object obj)
+        {
+            UISystem.Instance.OpenUIForm(Data_UIFormID.key_LoginForm);
+            isLogin = false;
+            EventManagerSystem.Instance.Add2(Data_EventName.OnLoginSucceed_str, LoginSucceed);
+        }
+
+        public override void StateUpdate()
+        {
+            if (isLogin)//登录成功跳转
+            {
+                m_Contorller.SetState(Data_StateName.MainState_name, username);
+            }
+        }
+
+        public override void StateEnd()
+        {
+
+        }
+
+        private void LoginSucceed(IEventArgs eventArgs)
+        {
+            LoginSucceedEventArgs loginSucceedEventArgs = eventArgs as LoginSucceedEventArgs;
+            isLogin = true;
+            username = loginSucceedEventArgs.username;
+            //Debug.LogError(loginSucceedEventArgs.username);
         }
     }
-
-    public override void StateEnd()
-    {
-        
-    }
-
-    private void LoginSucceed(IEventArgs eventArgs)
-    {
-        LoginSucceedEventArgs loginSucceedEventArgs = eventArgs as LoginSucceedEventArgs;
-        isLogin = true;
-        username = loginSucceedEventArgs.username;
-        //Debug.LogError(loginSucceedEventArgs.username);
-    }
 }
+

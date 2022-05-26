@@ -2,32 +2,36 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ISceneState 
+namespace MyGameFrameWork
 {
-    private string m_StateName = "";
-
-    public string StateName
+    public class ISceneState
     {
-        get { return m_StateName; }
-        set { m_StateName = value; }
-    }
-    protected SceneStateC m_Contorller = null;//×´Ì¬¿ØÖÆÆ÷
+        private string m_StateName = "";
 
-    public ISceneState() { }
+        public string StateName
+        {
+            get { return m_StateName; }
+            set { m_StateName = value; }
+        }
+        protected SceneStateC m_Contorller = null;//×´Ì¬¿ØÖÆÆ÷
 
-    public ISceneState(SceneStateC ssc)
-    {
-        m_Contorller = ssc;
-    }
+        public ISceneState() { }
 
-    public virtual void StateBegin(System.Object obj) { }
+        public ISceneState(SceneStateC ssc)
+        {
+            m_Contorller = ssc;
+        }
 
-    public virtual void StateUpdate() { }
+        public virtual void StateBegin(System.Object obj) { }
 
-    public virtual void StateEnd() { }
+        public virtual void StateUpdate() { }
 
-    public override string ToString()
-    {
-        return m_StateName;
+        public virtual void StateEnd() { }
+
+        public override string ToString()
+        {
+            return m_StateName;
+        }
     }
 }
+

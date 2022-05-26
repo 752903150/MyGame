@@ -7,7 +7,7 @@ public class UIForm : MonoBehaviour
 {
     public virtual void Awake()
     {
-        
+
     }
     public virtual void OnOpen(System.Object obj)//控制权交给UISystem
     {
@@ -15,13 +15,16 @@ public class UIForm : MonoBehaviour
     }
 
     // Update is called once per frame
-     public virtual void Update()
-     {
-        
-     }
+    public virtual void Update()
+    {
+
+    }
 
     public virtual void OnClose()//控制权交给UISystem
     {
 
     }
 }
+
+
+

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using MyGameFrameWork;
 //CreateTime：2022/5/9 16:02:26
 public class LoginSucceedEventArgs : IEventArgs
 {

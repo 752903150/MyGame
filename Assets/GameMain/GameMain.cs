@@ -3,25 +3,30 @@ using System.Collections.Generic;
 using UnityEngine;
 using DataCs;
 
-public partial class GameMain : MonoBehaviour
+namespace MyGameFrameWork
 {
-    private void Awake()
+    public partial class GameMain : MonoBehaviour
     {
-        GameObject.DontDestroyOnLoad(this.gameObject);
-        
-    }
-    void Start()
-    {
-        Debug.Log("GameMainStart");
+        private void Awake()
+        {
+            GameObject.DontDestroyOnLoad(this.gameObject);
 
-        StateInit();//状态初始化
+        }
+        void Start()
+        {
+            Debug.Log("GameMainStart");
 
-        sceneStateC.SetState(Data_StateName.StartState_name);
-    }
+            StateInit();//状态初始化
 
-    // Update is called once per frame
-    void Update()
-    {
-        sceneStateC.Update();
+            //sceneStateC.SetState(Data_StateName.StartState_name);
+
+            sceneStateC.SetState(Data_StateName.TestState_name);
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
+            sceneStateC.Update();
+        }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DataCs;
+using MyGameFrameWork;
 
 //CreateTime：2022/5/10 15:10:26
 public partial class LeftGameItem : UIItem

@@ -4,56 +4,61 @@ using UnityEngine;
 using UnityEngine.UI;
 using DataCs;
 
-public class TestInput : MonoBehaviour
+namespace MyGameFrameWork
 {
-    
-    
-    private void Start()
-    {
-        
-    }
 
-    private async void Update()
+    public class TestInput : MonoBehaviour
     {
-        if(Input.GetKeyDown(KeyCode.E))
+
+
+        private void Start()
         {
-            TestObj t = await NetSystem.Instance.LoadDataSimple<TestObj>(Data_WebRequest.TestObjUrl_name) as TestObj;
 
-            if (t!=null)
-            {
-                Debug.LogError(t.ToString());
-            }
-            else
-            {
-                Debug.LogError("Error!");
-            }
         }
-        if (Input.GetKeyDown(KeyCode.R))
+
+        private async void Update()
         {
-            WWWForm www = new WWWForm();
-            www.AddField(Data_WebRequest.TestObj2Param1_name,"zhukaiwen");
-            www.AddField(Data_WebRequest.TestObj2Param2_name, "123456798");
-            TestObj2 t = await NetSystem.Instance.LoadData<TestObj2>(
-                Data_WebRequest.TestObj2Url_name,
-                www,
-                (res) =>
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                TestObj t = await NetSystem.Instance.LoadDataSimple<TestObj>(Data_WebRequest.TestObjUrl_name) as TestObj;
+
+                if (t != null)
                 {
-                    Debug.LogError("成功");
-                },
-                ()=>
-                {
-                    Debug.LogError("失败");
+                    Debug.LogError(t.ToString());
                 }
-            ) as TestObj2;
-
-            if (t != null)
-            {
-                Debug.LogError(t.ToString());
+                else
+                {
+                    Debug.LogError("Error!");
+                }
             }
-            else
+            if (Input.GetKeyDown(KeyCode.R))
             {
-                Debug.LogError("Error!");
+                WWWForm www = new WWWForm();
+                www.AddField(Data_WebRequest.TestObj2Param1_name, "zhukaiwen");
+                www.AddField(Data_WebRequest.TestObj2Param2_name, "123456798");
+                TestObj2 t = await NetSystem.Instance.LoadData<TestObj2>(
+                    Data_WebRequest.TestObj2Url_name,
+                    www,
+                    (res) =>
+                    {
+                        Debug.LogError("成功");
+                    },
+                    () =>
+                    {
+                        Debug.LogError("失败");
+                    }
+                ) as TestObj2;
+
+                if (t != null)
+                {
+                    Debug.LogError(t.ToString());
+                }
+                else
+                {
+                    Debug.LogError("Error!");
+                }
             }
         }
     }
+
 }
