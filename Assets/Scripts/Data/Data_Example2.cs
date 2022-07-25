@@ -1,10 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 
-//CreateTime：2022/7/25 10:47:12
+//CreateTime：2022/7/25 10:32:03
 namespace DataCs
 {
-	public static class Data_FilePath
+	public static class Data_Example2
 	{
 		public static string JsonSavePath_Path = "Assets/File";
 

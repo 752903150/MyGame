@@ -20,7 +20,7 @@ namespace MyGameFrameWork
 
             //sceneStateC.SetState(Data_StateName.StartState_name);
 
-            sceneStateC.SetState(Data_StateName.TestState_name);
+            //sceneStateC.SetState(Data_StateName.TestState_name);
         }
 
         // Update is called once per frame

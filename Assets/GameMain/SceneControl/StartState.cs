@@ -7,7 +7,6 @@ namespace MyGameFrameWork
 {
     public class StartState : ISceneState
     {
-        string username;
         bool isLogin;
         public StartState(SceneStateC c) : base(c)
         {
@@ -16,16 +15,16 @@ namespace MyGameFrameWork
 
         public override void StateBegin(System.Object obj)
         {
-            UISystem.Instance.OpenUIForm(Data_UIFormID.key_LoginForm);
-            isLogin = false;
-            EventManagerSystem.Instance.Add2(Data_EventName.OnLoginSucceed_str, LoginSucceed);
+            //UISystem.Instance.OpenUIForm(Data_UIFormID.key_LoginForm);
+            //isLogin = false;
+            //EventManagerSystem.Instance.Add2(Data_EventName.OnLoginSucceed_str, LoginSucceed);
         }
 
         public override void StateUpdate()
         {
             if (isLogin)//µÇÂ¼³É¹¦Ìø×ª
             {
-                m_Contorller.SetState(Data_StateName.MainState_name, username);
+                //m_Contorller.SetState(Data_StateName.MainState_name, username);
             }
         }
 
@@ -36,10 +35,7 @@ namespace MyGameFrameWork
 
         private void LoginSucceed(IEventArgs eventArgs)
         {
-            LoginSucceedEventArgs loginSucceedEventArgs = eventArgs as LoginSucceedEventArgs;
-            isLogin = true;
-            username = loginSucceedEventArgs.username;
-            //Debug.LogError(loginSucceedEventArgs.username);
+            
         }
     }
 }
